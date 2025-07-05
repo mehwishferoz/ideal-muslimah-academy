@@ -165,6 +165,45 @@
             width: 20px;
             height: 20px;
         }
+
+        /* Mobile Navigation Specific Styles */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary); /* Use primary background for mobile menu */
+            z-index: 999; /* Ensure it's above other content but below toggle button */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%); /* Start off-screen to the right */
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.open {
+            transform: translateX(0); /* Slide in */
+        }
+        #mobile-menu .nav-link {
+            font-size: 1.8rem;
+            padding: 1rem 0;
+            color: var(--text-general);
+            transition: color 0.3s ease;
+        }
+        #mobile-menu .nav-link:hover {
+            color: var(--text-accent);
+        }
+        #mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-accent);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -198,7 +237,7 @@
                 <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode">
                     <!-- SVG icon will be inserted by JavaScript -->
                 </button>
-                <button class="nav-text focus:outline-none">
+                <button id="hamburger-menu-button" class="nav-text focus:outline-none">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -206,6 +245,17 @@
             </div>
         </div>
     </header>
+
+    <!-- Mobile Navigation Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden">
+        <button id="mobile-menu-close">✕</button>
+        <nav class="flex flex-col items-center space-y-6">
+            <a href="#home" class="nav-link" onclick="closeMobileMenu()">Home</a>
+            <a href="#about" class="nav-link" onclick="closeMobileMenu()">About</a>
+            <a href="#courses" class="nav-link" onclick="closeMobileMenu()">Courses</a>
+            <a href="#contact" class="nav-link" onclick="closeMobileMenu()">Contact</a>
+        </nav>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero-bg-pattern py-24 px-6 md:px-12 relative">
@@ -382,7 +432,6 @@
         // Function to update hero pattern background image based on current theme
         function updateHeroPattern() {
             const heroPattern = document.querySelector('.hero-bg-pattern');
-            // We are setting CSS custom properties which the `::after` pseudo-element uses.
             const isDarkMode = document.body.classList.contains('dark');
             
             if (heroPattern) {
@@ -398,7 +447,24 @@
             }
         }
 
-        // Load saved theme on page load
+        // Mobile Menu Functionality
+        const mobileMenuButton = document.getElementById('hamburger-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close');
+
+        function openMobileMenu() {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Load saved theme and attach event listeners on page load
         document.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             const body = document.body;
@@ -422,6 +488,16 @@
             // Attach event listeners to the toggle buttons
             if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
             if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+            // Attach event listeners for mobile menu
+            if (mobileMenuButton) mobileMenuButton.addEventListener('click', openMobileMenu);
+            if (mobileMenuCloseButton) mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
+
+            // Close mobile menu if a navigation link is clicked
+            const mobileNavLinks = mobileMenu.querySelectorAll('.nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
         });
     </script>
 
