@@ -15,21 +15,20 @@
     <style>
         /* CSS Variables for Light Theme (Default) */
         :root {
-            --bg-primary: #EEE3CB; /* Main background */
-            --bg-secondary: #D7C0AE; /* Card background, Quran verse box background */
-            --bg-tertiary: #E0D5C0; /* Alternating section background */
-            --text-general: #7B8C99; /* General body text - Made darker */
-            --text-accent: #967E76; /* Accent color for headings, buttons, icons */
-            --text-muted: #7B8C99; /* Footer text, subtle text - Made darker */
-            --btn-hover-bg: #967E76;
-            --btn-hover-text: #EEE3CB;
-            --btn-shadow: rgba(150, 126, 118, 0.3);
+            --bg-primary: #FEFCF3; /* Main background - Updated */
+            --bg-secondary: #f9f1e8; /* Card background, Quran verse box background - Updated */
+            --bg-tertiary: #f4e1e1; /* Alternating section background - Updated */
+            --text-general: #7B8C99; /* General body text - Retained */
+            --text-accent: #DBA39A; /* Accent color for headings, buttons, icons - Updated */
+            --text-muted: #7B8C99; /* Footer text, subtle text - Retained */
+            --btn-hover-bg: #DBA39A; /* Updated to new accent */
+            --btn-hover-text: #FEFCF3; /* Updated to new primary background */
+            --btn-shadow: rgba(219, 163, 154, 0.3); /* Updated to new accent based shadow */
             --card-shadow: rgba(0, 0, 0, 0.1);
             --card-hover-shadow: rgba(0, 0, 0, 0.15);
-            --hero-pattern-bg-color: #EEE3CB;
-            --hero-pattern-fill-color: #D7C0AE;
+            --hero-pattern-bg-color: #FEFCF3; /* Updated to new primary background */
+            --hero-pattern-fill-color: #F5EBE0; /* Updated to new secondary background */
         }
-
         /* CSS Variables for Dark Theme */
         body.dark {
             --bg-primary: #121212;
@@ -479,7 +478,7 @@
 
             const isDarkMode = document.body.classList.contains('dark');
             // Assuming the logos are in the same directory as this HTML file
-            const lightThemeLogo = 'ideal-muslimah-2.png';
+            const lightThemeLogo = 'img2.png';
             const darkThemeLogo = 'ideal-muslimah.jpg'; // Assuming you have a dark theme version named ideal-muslimah-3.png
 
             if (isDarkMode) {
