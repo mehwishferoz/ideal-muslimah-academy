@@ -212,14 +212,10 @@
     <header class="bg-primary-theme shadow-xl py-5 px-6 md:px-12">
         <div class="container-lg mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <!-- Placeholder for Logo - More refined SVG-like icon -->
-                <div class="text-accent-theme text-4xl mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L8.707 1.5ZM12.5 14h-11a.5.5 0 0 1-.5-.5V7.207L.146 8.146a.5.5 0 0 0 .708.708L1.5 8.707V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8.707l.646-.647a.5.5 0 0 0 .708.708L12.5 14Z"/>
-                    </svg>
-                </div>
+                <!-- Logo Image - dynamically set by JS -->
+                <img id="academy-logo" src="" alt="Ideal Muslimah Academy Logo" class="w-10 h-10 mr-3 object-contain">
                 <div class="text-3xl font-bold text-accent-theme font-heading tracking-wide">
-                    IDEAL MUSLIMAAH ACADEMY
+                    IDEAL MUSLIMAH ACADEMY
                 </div>
             </div>
             <nav class="hidden md:flex items-center space-x-10">
@@ -417,6 +413,7 @@
                 localStorage.setItem('theme', 'dark');
             }
             updateHeroPattern(); // Call function to update hero pattern colors/opacity
+            updateLogo(); // Call function to update logo based on theme
         }
 
         // Function to update hero pattern background image based on current theme
@@ -434,6 +431,23 @@
                     heroPattern.style.setProperty('--hero-pattern-fill-color', '#D7C0AE');
                     heroPattern.style.setProperty('--hero-pattern-opacity', '0.4');
                 }
+            }
+        }
+
+        // Function to update the logo based on the current theme
+        function updateLogo() {
+            const logoElement = document.getElementById('academy-logo');
+            if (!logoElement) return; // Exit if logo element not found
+
+            const isDarkMode = document.body.classList.contains('dark');
+            // Assuming the logos are in the same directory as this HTML file
+            const lightThemeLogo = 'ideal-muslimah-2.png';
+            const darkThemeLogo = 'ideal-muslimah.jpg'; // Assuming you have a dark theme version named ideal-muslimah-3.png
+
+            if (isDarkMode) {
+                logoElement.src = darkThemeLogo;
+            } else {
+                logoElement.src = lightThemeLogo;
             }
         }
 
@@ -474,6 +488,7 @@
                 if (themeToggleMobile) themeToggleMobile.innerHTML = moonIcon;
             }
             updateHeroPattern(); // Update hero pattern on initial load
+            updateLogo(); // Update logo on initial load
             
             // Attach event listeners to the toggle buttons
             if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
